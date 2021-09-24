@@ -32,6 +32,12 @@ The script is called `list_datadog_hosts.py`. To run, entire in your terminal:
 
 ### Examples
 
+- Get all hosts:
+
+    ```
+    python3 list_datadog_hosts.py
+    ```
+
 - Get all hosts without agents on Azure:
 
     ```
