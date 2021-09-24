@@ -46,4 +46,4 @@ The script is called `list_datadog_hosts.py`. To run, entire in your terminal:
     python3 list_datadog_hosts.py field:apps:agent
     ```
 
-Which would create a .csv file called `host_list_<CURRENTTIME>.csv` with a header `host_name, ip, sources, tags` and rows with the data pulled from Datadog.
+Running the command will create a .csv file called `host_list_<CURRENTTIME>.csv` with a header `host_name, ip, sources, tags` and rows with the data pulled from Datadog.
