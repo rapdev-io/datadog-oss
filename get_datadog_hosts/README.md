@@ -20,6 +20,10 @@ This will install the following packages:
     urllib3==1.26.6
     ```
 
+## Credentials
+
+Please add your Datadog `API_KEY` and `APP_KEY` to the top of the python file before running via the `DD_API_KEY` and `DD_APP_KEY` variables to authenticate to your Datadog account. 
+
 ## To Run:
 
 The script is called `list_datadog_hosts.py`. To run, entire in your terminal:  
