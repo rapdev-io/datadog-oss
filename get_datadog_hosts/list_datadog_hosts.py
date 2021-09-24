@@ -38,10 +38,8 @@ def get_hosts(filters=None, start=None, count=1000, include_muted_hosts_data=0, 
 
 
 def build_hosts(response):
-    """ Pass in a json object with optional tag value from stdin and an optional header flag to check if it is for creating a new csv.
-
-    :returns: string
-    """    
+    """ Pass in a json object with optional tag value from stdin and an optional header flag to check if it is for creating a new csv."""
+        
     for host in response.get("host_list", []):
         # Get all the properties of this host
         host_name = host.get("host_name", "")
