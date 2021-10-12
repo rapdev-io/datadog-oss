@@ -38,18 +38,6 @@ The script is called `list_datadog_hosts.py`. To run, entire in your terminal:
     python3 list_datadog_hosts.py
     ```
 
-- Get all hosts without agents on Azure:
-
-    ```
-    python3 list_datadog_hosts.py field:metadata_agent_version:noagent,field:apps:azure
-    ```
-
-- Get all hosts without agents on AWS:
-
-    ```
-    python3 list_datadog_hosts.py field:metadata_agent_version:noagent,field:apps:aws
-    ```
-
 - Get all hosts with agents:
 
     ```
@@ -60,6 +48,18 @@ The script is called `list_datadog_hosts.py`. To run, entire in your terminal:
 
     ```
     python3 list_datadog_hosts.py field:metadata_agent_version:noagent
+    ```
+    
+- Get all hosts without agents on Azure:
+
+    ```
+    python3 list_datadog_hosts.py field:metadata_agent_version:noagent,field:apps:azure
+    ```
+
+- Get all hosts without agents on AWS:
+
+    ```
+    python3 list_datadog_hosts.py field:metadata_agent_version:noagent,field:apps:aws
     ```
 
 Running the command will create a .csv file called `host_list_<CURRENTTIME>.csv` with a header `host_name, ip, sources, tags` and rows with the data pulled from Datadog.
