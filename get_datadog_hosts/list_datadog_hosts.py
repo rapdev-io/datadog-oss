@@ -92,6 +92,9 @@ def main():
 
         # Get total number of hosts returned by the API
         host_count = hosts_response.get('total_matching')
+        
+        if not host_count or host_count == 0:
+            raise Exception("No hosts returned with the query. Please validate that your API/APP key are correct and the query returns hosts via the UI.")
 
         # Increment by count
         pagination_count += 1000
