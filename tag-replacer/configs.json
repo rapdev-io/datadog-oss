@@ -1,0 +1,16 @@
+{
+  "tags": {
+    "blah:blah": "blah:newvalue1",
+    "oldtomastest1:oldmytestvalue1": "tomastest1:mytestvalue1",
+    "test2:mytestvalue2": "newtest2:newvalue2",
+    "test3:mytestvalue3": "newtest3:newvalue3",
+    "env:dev": "env:prod"
+  },
+  "dashboards": [
+    "xyu-rz9-kan"
+  ],
+  "monitors": [
+    36302732
+  ],
+  "synthetics": []
+}
