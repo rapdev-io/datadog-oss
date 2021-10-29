@@ -1,5 +1,7 @@
 # RapDev Tag Replacer
 
+**Warning**: This script makes post requests to Datadog's API and has the ability to override existing dashboards, monitors, and synthetics. Use at your own risk. For assistance, we encourage you to reach out to the RapDev team via integrations@rapdev.io.
+
 ## Introduction
 
 The goal of the tag replacer is to assist teams with auditing and compliance of datadog tags across their dashboards, monitors, and synthetics. 
