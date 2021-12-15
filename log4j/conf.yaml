@@ -1,0 +1,6 @@
+init_config:
+
+instances:
+  - api_key: ***********
+    app_key: ***********
+    tags: []
