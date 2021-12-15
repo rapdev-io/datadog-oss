@@ -5,6 +5,7 @@ except ImportError:
 import re
 import traceback
 from requests import HTTPError
+from pkg_resources import parse_version
 try:
     from datadog_agent import get_config
 except ImportError:
@@ -227,11 +228,22 @@ class ValidatorCheck(AgentCheck):
             host_meta = host.get("meta", {})
 
             # Checks if agent is present in the source list, and tags the metrics with the version
-            if ("agent" in source_list) and host_meta and ('agent_version' in host_meta.keys()):
-                metric_tags.append("agent_version:{}".format(host_meta.get('agent_version', "")))
-                self.gauge("agent.installed", 1, tags=metric_tags, hostname=None)
-            else:
-                self.gauge("agent.installed", 0, tags=metric_tags, hostname=None)
+            if ("agent" in source_list) and host_meta and ("agent_version" in host_meta.keys()):
+                string_version = host_meta.get("agent_version", "")
+                agent_version = parse_version(host_meta.get("agent_version", ""))
+                metric_tags.append("agent_version:{}".format(string_version))
+                if string_version.startswith("6"):
+                    if agent_version > parse_version("6.16.9") and agent_version < parse_version("6.32.2"):
+                        self.gauge("agent.is_log4j_vulnerable", 1, tags=metric_tags, hostname=None)
+                    else:
+                        self.gauge("agent.is_log4j_vulnerable", 0, tags=metric_tags, hostname=None)
+                elif string_version.startswith("7"):
+                    if agent_version > parse_version("7.16.9") and agent_version < parse_version("7.32.2"):
+                        self.gauge("agent.is_log4j_vulnerable", 1, tags=metric_tags, hostname=None)
+                    else:
+                        self.gauge("agent.is_log4j_vulnerable", 0, tags=metric_tags, hostname=None)
+            
+                self.gauge("agent.checked", 1, tags=metric_tags, hostname=None)
     
     def is_ignored_host(self, hostname):
         """
