@@ -233,12 +233,12 @@ class ValidatorCheck(AgentCheck):
                 agent_version = parse_version(host_meta.get("agent_version", ""))
                 metric_tags.append("agent_version:{}".format(string_version))
                 if string_version.startswith("6"):
-                    if agent_version > parse_version("6.16.9") and agent_version < parse_version("6.32.2"):
+                    if agent_version > parse_version("6.16.9") and agent_version < parse_version("6.32.3"):
                         self.gauge("agent.is_log4j_vulnerable", 1, tags=metric_tags, hostname=None)
                     else:
                         self.gauge("agent.is_log4j_vulnerable", 0, tags=metric_tags, hostname=None)
                 elif string_version.startswith("7"):
-                    if agent_version > parse_version("7.16.9") and agent_version < parse_version("7.32.2"):
+                    if agent_version > parse_version("7.16.9") and agent_version < parse_version("7.32.3"):
                         self.gauge("agent.is_log4j_vulnerable", 1, tags=metric_tags, hostname=None)
                     else:
                         self.gauge("agent.is_log4j_vulnerable", 0, tags=metric_tags, hostname=None)
