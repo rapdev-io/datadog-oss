@@ -1,0 +1,9 @@
+---
+- name: Setup nginx
+  import_playbook: nginx_playbook.yaml
+
+- name: Setup SQL Server for Datadog
+  import_playbook: sqlserver_playbook.yaml
+
+- name: Install Datadog Agent
+  import_playbook: datadog_playbook.yaml

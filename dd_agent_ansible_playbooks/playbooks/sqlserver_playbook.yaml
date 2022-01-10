@@ -1,0 +1,5 @@
+- hosts: sqlservers
+  tasks:
+    - name: 'Add datadog user to sql database'
+      ansible.windows.win_shell: "invoke-sqlcmd -ServerInstance {{ sqlserver }} -Query \"CREATE LOGIN datadog WITH PASSWORD = '{{ vault_windows_password }}'; CREATE USER datadog FOR LOGIN datadog; GRANT SELECT on sys.dm_os_performance_counters to datadog; GRANT VIEW SERVER STATE to datadog; GRANT CONNECT ANY DATABASE to datadog; GRANT VIEW ANY DEFINITION to datadog;\""
+      ignore_errors: yes

@@ -1,0 +1,15 @@
+- name: Install Datadog Agent on servers in AWS
+  hosts: all
+  roles:
+    - { role: Datadog.datadog, become: yes }
+  vars:
+    datadog_api_key: "{{ vault_dd_api_key }}"
+    datadog_config:
+      tags:
+        - env:experian
+      logs_enabled: true
+      network_config:
+        enabled: true
+      process_config:
+        enabled: true
+    
