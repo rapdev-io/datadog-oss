@@ -1,0 +1,7 @@
+become: yes
+user: ubuntu
+datadog_checks:
+  nginx:
+    init_config:
+    instances:
+      - nginx_status_url: http://localhost:80/status/

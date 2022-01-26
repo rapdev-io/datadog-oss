@@ -1,0 +1,23 @@
+become: no
+datadog_agent_version: 7.31.0
+datadog_checks:
+  windows_service:
+    init_config:
+    instances:
+      - services:
+        - ALL
+  sqlserver:
+    init_config:
+    instances:
+      - host: "{{ sqlserver }}"
+        username: datadog
+        password: "{{ vault_windows_password }}"
+        connector: odbc
+        driver: SQL Server
+  process:
+    init_config:
+    instances:
+      - name: sqlserver
+        search_string: 
+          - sqlservr.exe
+

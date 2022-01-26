@@ -1,0 +1,78 @@
+###################
+## Windows Hosts ##
+###################
+
+- name: Update SNMP Profiles on a Windows host
+  hosts: windowshosts
+  tasks:
+    - name: Install PSCX
+      community.windows.win_psmodule:
+        name: Pscx
+        state: present
+        allow_clobber: yes
+
+    - name: Get Profiles from S3
+      ansible.windows.win_get_url:
+        url: https://files.rapdev.io/datadog/snmp-profiles.tar.gz
+        dest: C:\Temp\snmp-profiles.tar.gz
+        force: yes
+
+    - name: Recursively Remove embedded3 python profiles
+      win_file:
+        path: C:\Program Files\Datadog\Datadog Agent\embedded3\Lib\site-packages\datadog_checks\snmp\data\profiles\
+        state: absent
+    
+    - name: Recreate deleted embedded3 python profile directory
+      win_file:
+        path: C:\Program Files\Datadog\Datadog Agent\embedded3\Lib\site-packages\datadog_checks\snmp\data\profiles\
+        state: directory
+
+    - name: Recursively Remove existing profiles
+      win_file:
+        path: C:\ProgramData\Datadog\conf.d\snmp.d\profiles
+        state: absent
+
+    - name: Extract profiles from tar
+      community.windows.win_unzip:
+        src: C:\Temp\snmp-profiles.tar.gz
+        dest: C:\ProgramData\Datadog\conf.d\snmp.d\profiles
+        delete_archive: yes
+    
+    - name: Restart Datadog Agent
+      ansible.windows.win_service:
+        name: DatadogAgent
+        state: restarted
+        force_dependent_services: yes
+
+#################
+## LINUX Hosts ##
+#################
+
+- name: Update SNMP Profiles on a Linux host
+  hosts: linuxhosts
+  tasks:
+    - name: Get Profiles from S3
+      get_url:
+        url: https://files.rapdev.io/datadog/snmp-profiles.tar.gz
+        dest: /tmp/snmp-profiles.tar.gz
+
+    - name: Recursively Remove existing profiles
+      file:
+        path: /etc/datadog-agent/conf.d/snmp.d/profiles/
+        state: absent
+    
+    - name: Recreate profile dir
+      file:
+        path: /etc/datadog-agent/conf.d/snmp.d/profiles/
+        state: directory
+
+    - name: Unzip profiles
+      ansible.builtin.unarchive:
+        src: /tmp/snmp-profiles.tar.gz
+        dest: /etc/datadog-agent/conf.d/snmp.d/profiles
+        remote_src: yes
+
+    - name: Restart Datadog Agent
+      ansible.builtin.service:
+        name: datadog-agent
+        state: restarted

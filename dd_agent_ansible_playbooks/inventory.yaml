@@ -1,0 +1,21 @@
+all:
+  hosts:
+    nickvnginx01:
+      ansible_host: 54.226.135.253
+      ansible_ssh_private_key_file: /Users/nickv/.ssh/nickv_useast1.pem
+      ansible_user: ubuntu
+    nickvsql01:
+      ansible_host: 35.172.199.29
+      ansible_connection: winrm
+      ansible_user: Administrator
+      ansible_become_user: Administrator
+      ansible_password: "{{ vault_windows_password }}"
+      ansible_winrm_server_cert_validation: ignore
+      ansible_become_method: runas
+  children:
+    sqlservers:
+      hosts:
+        nickvsql01:
+    webservers:
+      hosts:
+        nickvnginx01:
