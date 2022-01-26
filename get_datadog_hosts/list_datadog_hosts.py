@@ -3,12 +3,11 @@
 
 import requests, sys, json, datetime, csv
 
-CSV_HEADERS = ["host_name", "host_aliases", "host_apps", "sources", "last_reported_time", "host_status", "tags", "ipaddress"]
+CSV_HEADERS = ["host_name", "host_aliases", "os_info", "build_info", "host_apps", "sources", "last_reported_time", "host_status", "tags", "ipaddress"]
 CSV_DATA = []
 
 DD_API_KEY = ""
 DD_APP_KEY = ""
-
 
 def get_hosts(filters=None, start=None, count=1000, include_muted_hosts_data=0, include_hosts_metadata=1):
     """API helper function for calling the Datadog API endpoint
@@ -59,8 +58,21 @@ def build_hosts(response):
         else:
             ip_address = ""
 
+        windows_os_info = meta.get("winV", [])
+        mac_os_info = meta.get("macV", [])
+
+        if windows_os_info:
+            os_info = windows_os_info[0]
+            build_info = windows_os_info[1]
+        elif mac_os_info:
+            os_info = mac_os_info[0]
+            build_info = mac_os_info[1]
+        else:
+            os_info = "N/A"
+            build_info = "N/A"
+
         # Build the row of data
-        host_info_row = [host_name, host_aliases, host_apps, sources, last_reported_time, host_status, tags, ip_address]
+        host_info_row = [host_name, host_aliases, os_info, build_info, host_apps, sources, last_reported_time, host_status, tags, ip_address]
 
         # Append it to our list of data
         CSV_DATA.append(host_info_row)
