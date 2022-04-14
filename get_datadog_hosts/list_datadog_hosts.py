@@ -3,7 +3,7 @@
 
 import requests, sys, json, datetime, csv
 
-CSV_HEADERS = ["host_name", "host_aliases", "os_info", "build_info", "host_apps", "sources", "last_reported_time", "host_status", "tags", "ipaddress"]
+CSV_HEADERS = ["host_name", "host_aliases", "os_info", "build_info", "host_apps", "sources", "last_reported_time", "host_status", "tags", "ipaddress", "cpu_cores", "cpu_logical_processors", "cpu_model_name", "filesystems", "memory"]
 CSV_DATA = []
 
 DD_API_KEY = ""
@@ -52,6 +52,15 @@ def build_hosts(response):
         # Get ip address from meta > gohai > network > ipaddress if available
         meta = host.get("meta", {})
         gohai = json.loads(meta.get("gohai", "{}"))
+        
+        cpu = gohai.get("cpu", {})
+        if cpu:
+            cpu_cores = cpu.get("cpu_cores", "")
+            cpu_logical_processors = cpu.get("cpu_logical_processors", "")
+            cpu_model_name = cpu.get("model_name", "")
+        filesystems = gohai.get("filesystem", [])
+        memory = gohai.get("memory",{})
+        
         network = gohai.get("network", {})
         if network:
             ip_address = network.get("ipaddress", "")
@@ -72,7 +81,7 @@ def build_hosts(response):
             build_info = "N/A"
 
         # Build the row of data
-        host_info_row = [host_name, host_aliases, os_info, build_info, host_apps, sources, last_reported_time, host_status, tags, ip_address]
+        host_info_row = [host_name, host_aliases, os_info, build_info, host_apps, sources, last_reported_time, host_status, tags, ip_address, cpu_cores, cpu_logical_processors, cpu_model_name, filesystems, memory]
 
         # Append it to our list of data
         CSV_DATA.append(host_info_row)
