@@ -4,15 +4,9 @@ The purpose of this repository is to setup a demo of Ansible. It is a minimalist
 
 ## Setup
 
-There are a few prerequisites that need to be addressed prior to running the Ansible code.
+The first prerequisite is that the ansible needs to be installed on the control node.
 
-First of all - Install Ansible. Follow the instructions here: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
-
-Second of all - we need servers. Clone the https://github.com/rapdev-io/experian_terraform if they don't exist, `terraform init`, and then `terraform apply` should do the trick.
-The SQL server will already have SQL installed and running, nginx is just an ubuntu server. When they are up and running, grab the public IPs of the servers and enter them under
-`ansible_host` for the corresponding server in `inventory.yaml`.
-
-Third of all - you'll need Nick's ec2 key. Ask them for it. In the `inventory.yaml` file, change the path of the private key file, because you're (probably) not `nickv` if you're reading this.
+Follow the instructions here: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
 
 ## Executing a Playbook
 
