@@ -1,6 +1,6 @@
-# Experian Ansible Demo
+# Ansible Demo
 
-The purpose of this repository is to setup a demo of Ansible for Experian. It is a minimalistic approach as a POC to show them how it works.
+The purpose of this repository is to setup a demo of Ansible. It is a minimalistic approach as a POC to show them how it works.
 
 ## Setup
 
