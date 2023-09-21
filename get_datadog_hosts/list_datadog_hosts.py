@@ -8,6 +8,7 @@ CSV_DATA = []
 
 DD_API_KEY = ""
 DD_APP_KEY = ""
+DD_SITE = "api.datadoghq.com"
 
 def get_hosts(filters=None, start=None, count=1000, include_muted_hosts_data=0, include_hosts_metadata=1):
     """API helper function for calling the Datadog API endpoint
@@ -17,7 +18,6 @@ def get_hosts(filters=None, start=None, count=1000, include_muted_hosts_data=0, 
 
     # Build the headers for the request
     headers = {
-        "DD_SITE":"datadoghq.com",
         "DD-API-KEY": DD_API_KEY, 
         "DD-APPLICATION-KEY": DD_APP_KEY
         }
@@ -31,7 +31,7 @@ def get_hosts(filters=None, start=None, count=1000, include_muted_hosts_data=0, 
 
     # Try to make the request, raise exception if it fails
     try:
-        return requests.get("https://api.datadoghq.com/api/v1/hosts", headers=headers, params=params).json()
+        return requests.get(f"https://{DD_SITE}/api/v1/hosts", headers=headers, params=params).json()
     except Exception as e:
         raise Exception("Error when getting hosts from api: {}".format(e))
 
