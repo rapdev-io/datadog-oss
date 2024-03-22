@@ -1,6 +1,5 @@
 """
-This helper script takes two inputs; an excel sheet with a list of target hosts and a txt file with the output of an ansible tasks.
-It compares the two and tries to find missing hosts in the output task so it's easy to find any hosts that stalled out with no clear error.
+This script takes an optional tag arg and makes a request to Datadog's Host endpoint to check for duplicate hosts, specifically FQDN vs Non-FQDN Hosts
 """
 
 import requests, sys, json, datetime, csv
