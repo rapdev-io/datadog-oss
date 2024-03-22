@@ -25,7 +25,7 @@ Before using this script, ensure you have:
 
 4. Run the script from the command line, optionally passing a tag to filter the hosts:
 ```
-python duplicate_host_checker.py [optional_tag]
+python find_fqdn_duplicates.py [optional_tag]
 ```
 
 ## How It Works
